@@ -56,8 +56,20 @@ _DEPRECATED = [
 ]
 
 
+class GitlabEnum(str, Enum):
+    """A JSON-serializable enum"""
+
+    def __str__(self) -> str:
+        return str(self.value)
+
+
+class GitlabIntEnum(IntEnum):
+    def __str__(self) -> str:
+        return str(self.value)
+
+
 # https://gitlab.com/gitlab-org/gitlab/-/blob/e97357824bedf007e75f8782259fe07435b64fbb/lib/gitlab/access.rb#L12-18
-class AccessLevel(IntEnum):
+class AccessLevel(GitlabIntEnum):
     NO_ACCESS: int = 0
     MINIMAL_ACCESS: int = 5
     GUEST: int = 10
@@ -69,13 +81,13 @@ class AccessLevel(IntEnum):
 
 
 # https://gitlab.com/gitlab-org/gitlab/-/blob/e97357824bedf007e75f8782259fe07435b64fbb/lib/gitlab/visibility_level.rb#L23-25
-class Visibility(Enum):
+class Visibility(GitlabEnum):
     PRIVATE: str = "private"
     INTERNAL: str = "internal"
     PUBLIC: str = "public"
 
 
-class NotificationLevel(Enum):
+class NotificationLevel(GitlabEnum):
     DISABLED: str = "disabled"
     PARTICIPATING: str = "participating"
     WATCH: str = "watch"
@@ -85,7 +97,7 @@ class NotificationLevel(Enum):
 
 
 # https://gitlab.com/gitlab-org/gitlab/-/blob/e97357824bedf007e75f8782259fe07435b64fbb/app/views/search/_category.html.haml#L10-37
-class SearchScope(Enum):
+class SearchScope(GitlabEnum):
     # all scopes (global, group and  project)
     PROJECTS: str = "projects"
     ISSUES: str = "issues"
